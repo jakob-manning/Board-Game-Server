@@ -2,7 +2,7 @@ import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 import { green, yellow } from "https://deno.land/std@0.53.0/fmt/colors.ts";
 
 const env = Deno.env.toObject();
-const PORT = env.PORT || 4000;
+const PORT = parseInt(env.PORT) || 4000;
 const HOST = env.HOST || "127.0.0.1";
 
 
@@ -37,4 +37,5 @@ app.addEventListener("listen", ({ secure, hostname, port }) => {
   console.log(`Listening on: ${port}`);
 });
 
-await app.listen(`${HOST}:${PORT}`);
+// await app.listen(`${HOST}:${PORT}`);
+await app.listen({ port: PORT });
