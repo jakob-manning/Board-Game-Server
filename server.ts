@@ -1,4 +1,5 @@
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import { green, yellow } from "https://deno.land/std@0.53.0/fmt/colors.ts";
 
 const env = Deno.env.toObject();
@@ -17,12 +18,14 @@ app.use(logger.logger);
 app.use(logger.responseTime);
 
 // Disable CORS
-app.use( ({request, response}: { request: any; response: any }, next: Function) => {
-  response.headers.set("Access-Control-Allow-Origin", "*");
-  response.headers.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  response.headers.set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
-  next();
-})
+// app.use( ({request, response}: { request: any; response: any }, next: Function) => {
+//   response.headers.set("Access-Control-Allow-Origin", "*");
+//   response.headers.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+//   response.headers.set("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+//   next();
+// })
+
+app.use(oakCors()); // Enable CORS for All Routes
 
 //Remainder App Routes
 app.use(router.routes());
